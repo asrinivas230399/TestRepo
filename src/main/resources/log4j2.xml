@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Logging configuration for the application using Log4j2.
+    - Console appender for real-time log output.
+    - File appender added for persistent log storage (recommended for production).
+    - Root logger at INFO level; com.example.timesheet logger at DEBUG for detailed logs.
+    - Additivity set to false to prevent duplicate logs.
+    - Pattern layout includes timestamp, log level, class, line number, and message.
+    - For troubleshooting Log4j2 itself, set status to DEBUG temporarily.
+    - Review log levels and sensitive data logging before production deployment.
+    - Consider log rotation and archiving for file logs in production.
+-->
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </Console>
+        <!-- File appender for persistent log storage -->
+        <File name="FileLogger" fileName="logs/app.log" immediateFlush="false" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Root>
+        <Logger name="com.example.timesheet" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLogger"/>
+        </Logger>
+    </Loggers>
+</Configuration>
